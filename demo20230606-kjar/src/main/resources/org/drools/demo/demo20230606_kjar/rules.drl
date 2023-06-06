@@ -1,0 +1,19 @@
+package org.drools.demo.demo20230606_kjar;
+
+import org.drools.demo.demo20230606_datamodel.*;
+import java.math.BigDecimal;
+
+rule "sell-more-kiwis"
+when
+    $cart : Fact( objectType == "Cart", $accountId : getFieldValue("AccountId") != null )
+    $account : Fact( objectType == "Account" , id == ( $accountId ) , getFieldValue("Type") == "Preferred" )
+    Fact( objectType == "CartItem" , $productId : getFieldValue("ProductId") != null , $kiwiCartItemId : id)
+    Fact( id == ( $productId ) , objectType == "Product2" , getFieldValue("Name") == "Kiwi" )
+    $nonKiwiQty : Number( ) from accumulate ( Fact( objectType == "CartItem" , id != $kiwiCartItemId , $qty : getFieldValue("Quantity")),  sum($qty))
+then
+    Fact discount = new Fact( "PriceAdjustment", "abc-123" );
+    discount.setFieldValue( "Source", "Promotion" );
+    discount.setFieldValue( "Value", new BigDecimal(String.valueOf($nonKiwiQty.doubleValue() * -0.01d)));
+    discount.setFieldValue( "CartItemId", $kiwiCartItemId );
+    insert( discount );
+end

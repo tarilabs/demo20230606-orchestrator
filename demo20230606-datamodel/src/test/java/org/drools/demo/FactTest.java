@@ -2,7 +2,7 @@ package org.drools.demo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.drools.demo.demo20230606.datamodel.Fact;
+import org.drools.demo.demo20230606_datamodel.Fact;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

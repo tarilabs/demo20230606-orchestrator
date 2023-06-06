@@ -1,4 +1,4 @@
-package org.drools.demo.demo20230606.datamodel;
+package org.drools.demo.demo20230606_datamodel;
 
 import java.util.HashMap;
 import java.util.Map;
