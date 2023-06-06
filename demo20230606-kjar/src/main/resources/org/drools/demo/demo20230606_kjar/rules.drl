@@ -9,7 +9,10 @@ when
     $account : Fact( objectType == "Account" , id == ( $accountId ) , getFieldValue("Type") == "Preferred" )
     Fact( objectType == "CartItem" , $productId : getFieldValue("ProductId") != null , $kiwiCartItemId : id)
     Fact( id == ( $productId ) , objectType == "Product2" , getFieldValue("Name") == "Kiwi" )
-    $nonKiwiQty : Number( ) from accumulate ( Fact( objectType == "CartItem" , id != $kiwiCartItemId , $qty : getFieldValue("Quantity")),  sum($qty))
+    accumulate (
+        Fact( objectType == "CartItem" , id != $kiwiCartItemId , $qty : getFieldValue("Quantity") ) ;
+        $nonKiwiQty : sum($qty)
+    )
 then
     Fact discount = new Fact( "PriceAdjustment", "abc-123" );
     discount.setFieldValue( "Source", "Promotion" );
