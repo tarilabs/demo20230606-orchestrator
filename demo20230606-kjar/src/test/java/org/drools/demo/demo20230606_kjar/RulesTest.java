@@ -9,6 +9,7 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.drools.demo.demo20230606_datamodel.Fact;
 import org.drools.demo.demo20230606_utils.KieSessionUtils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
@@ -75,6 +76,48 @@ public class RulesTest {
             Assertions.fail("failed assumptions in test", e);
         } finally {
             session.dispose();
+            kContainer.dispose();
         }
+    }
+
+    @Disabled("TODO unexpected format, awaiting clarifications")
+    @Test
+    public void testKiwiPayload2023060() throws Exception {
+        KieServices ks = KieServices.get();
+        KieContainer kContainer = ks.getKieClasspathContainer();
+
+        LOG.info("Creating kieBase");
+        KieBase kieBase = kContainer.getKieBase();
+
+        LOG.info("There should be rules: ");
+        for ( KiePackage kp : kieBase.getKiePackages() ) {
+            for (Rule rule : kp.getRules()) {
+                LOG.info("kp " + kp + " rule " + rule.getName());
+            }
+        }
+
+        LOG.info("Creating kieSession");
+        KieSession session = kieBase.newKieSession();
+        session.addEventListener(new DebugRuleRuntimeEventListener());
+        session.addEventListener(new DebugAgendaEventListener());
+
+        final var JSON = Files.readString(Paths.get(RulesTest.class.getResource("/kiwipayload_gen20230606.json").toURI()));
+        LOG.info("Now running data");
+        List<Fact> unmarshal = new ObjectMapper()
+            .readerFor(new TypeReference<List<Fact>>() {})
+            .readValue(JSON);
+        unmarshal.forEach(session::insert);
+        session.fireAllRules();
+        LOG.info("Final checks");
+        Collection<Fact> results = KieSessionUtils.getFactsHaving(session, Fact.class, t -> t.getObjectType().equals("PriceAdjustment"));
+        Assertions.assertThat(results)
+            .hasSize(1)
+            .first()
+            .hasFieldOrPropertyWithValue("id", "abc-123")
+            .hasFieldOrPropertyWithValue("fields.Source", "Promotion")
+            .hasFieldOrPropertyWithValue("fields.Value", new BigDecimal("-1.23"))
+            ;
+        session.dispose();
+        kContainer.dispose();
     }
 }

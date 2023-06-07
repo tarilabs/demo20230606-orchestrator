@@ -28,7 +28,8 @@ public class App {
         KieServices ks = KieServices.get();
         do {
             doOnce(ks);
-            pressEnterKeyToContinue();
+            System.gc();
+            pressEnterKeyToContinue("all done, pending for a new loop");
         } while(true);
     }
 
@@ -44,11 +45,12 @@ public class App {
         Collection<Fact> results = KieSessionUtils.getFactsHaving(session, Fact.class, t -> t.getObjectType().equals("PriceAdjustment"));
         LOG.info("PriceAdjustment(s): {}", results);
         session.dispose();
+        pressEnterKeyToContinue("RULES EVALUATED, pending to dispose KieContainer");
         kieContainer.dispose();
-        System.gc();
     }
 
-    private static void pressEnterKeyToContinue() { 
+    private static void pressEnterKeyToContinue(String message) {
+        System.out.print(message + ". "); 
         System.out.println("Press Enter key to continue..."); // deliberate on sysout
         s.nextLine();
     }
