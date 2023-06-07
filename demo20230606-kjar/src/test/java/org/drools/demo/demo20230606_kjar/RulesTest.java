@@ -5,10 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.assertj.core.api.Assertions;
 import org.drools.demo.demo20230606_datamodel.Fact;
+import org.drools.demo.demo20230606_utils.KieSessionUtils;
 import org.junit.jupiter.api.Test;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
@@ -62,7 +62,7 @@ public class RulesTest {
             session.fireAllRules();
 
             LOG.info("Final checks");
-            Collection<Fact> results = getFactsHaving(session, Fact.class, t -> t.getObjectType().equals("PriceAdjustment"));
+            Collection<Fact> results = KieSessionUtils.getFactsHaving(session, Fact.class, t -> t.getObjectType().equals("PriceAdjustment"));
             Assertions.assertThat(results)
                 .hasSize(1)
                 .first()
@@ -76,11 +76,5 @@ public class RulesTest {
         } finally {
             session.dispose();
         }
-    }
-
-    private static <F> Collection<F> getFactsHaving(KieSession session, Class<F> ofType, Predicate<F> having) {
-        @SuppressWarnings("unchecked") // deliberate and constrained by generic erasure.
-        var result =(Collection<F>) session.getObjects(object -> ( ofType.isInstance(object) && having.test((F) object) ) );
-        return result;
     }
 }
