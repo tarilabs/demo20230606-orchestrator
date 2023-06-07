@@ -80,7 +80,7 @@ public class RulesTest {
         }
     }
 
-    @Disabled("TODO unexpected format, awaiting clarifications")
+    @Disabled("TODO inconsistent test data pending for clarifications")
     @Test
     public void testKiwiPayload2023060() throws Exception {
         KieServices ks = KieServices.get();
