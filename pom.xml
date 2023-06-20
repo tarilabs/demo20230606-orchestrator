@@ -25,6 +25,7 @@
     <module>demo20230606-datamodel</module>
     <module>demo20230606-utils</module>
     <module>demo20230606-kjar</module>
+    <module>demo20230606-2000-rules-kjar</module>
     <module>demo20230606-kiecontainerorchestrator</module>
   </modules>
 
