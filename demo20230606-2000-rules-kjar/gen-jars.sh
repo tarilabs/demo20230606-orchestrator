@@ -1,4 +1,4 @@
-i=1
+i=0
 
 ### make sure the target jar directory exists
 mkdir -p jar-dir
