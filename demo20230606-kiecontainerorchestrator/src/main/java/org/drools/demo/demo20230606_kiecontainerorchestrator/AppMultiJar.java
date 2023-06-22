@@ -18,10 +18,6 @@ import java.util.Scanner;
 public class AppMultiJar {
     public static Logger LOG = LoggerFactory.getLogger(AppMultiJar.class);
     static Scanner s = new Scanner(System.in);
-    static String JSON;
-    static KieContainer kieContainer = null;
-    static ReleaseId releaseId;
-    static byte[] buffer;
     
     public static void main(String[] args) throws Exception {
         LOG.info("App starting.");
@@ -42,28 +38,27 @@ public class AppMultiJar {
         pressEnterKeyToContinue("App started.  Attach debugger?");
 
         // read the JSON payload from disk
-        JSON = Files.readString(Paths.get(AppMultiJar.class.getResource("/" + jsonFilename).toURI()));
+        final var JSON = Files.readString(Paths.get(AppMultiJar.class.getResource("/" + jsonFilename).toURI()));
 
         // prep Drools
         KieServices ks = KieServices.get();
         int i = 0;
         do {
             LOG.info("Loop count: " + i);
-            releaseId = ks.newReleaseId("org.drools.demo", kjarName + i, "1.0-SNAPSHOT");
-            kieContainer = ks.newKieContainer(releaseId);
-            doOnce(ks);
-            System.gc();
-
+            ReleaseId releaseId = ks.newReleaseId("org.drools.demo", kjarName + i, "1.0-SNAPSHOT");
+            KieContainer kieContainer = ks.newKieContainer(releaseId);
+            doOnce(kieContainer, JSON);
+            
             // release the KieContainer
             kieContainer.dispose();
-            kieContainer = null; // relinquish all instances for real in Java, to give a chance to the GC.
+            System.gc();
         } while(i++ < 10);
 
         System.gc();
         pressEnterKeyToContinue("Nothing more to do, app will exit");
     }
 
-    private static void doOnce(KieServices ks) throws Exception {
+    private static void doOnce(KieContainer kieContainer, final String JSON) throws Exception {
         // create a new KieSession
         KieSession session = kieContainer.newKieSession();
 
