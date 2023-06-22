@@ -2,6 +2,13 @@ basic experimental project to test several different strategies for a "orchestra
 
 # Developer log
 
+## 2023-06-21 investigating...
+
+When using `kie-ci` all seems to be working as expected.
+It is to be noted by this commit this demonstrator does not include: https://github.com/kiegroup/drools/commit/10ea2178ab4e301e10df3777b3d6712d4935b5a5 which would be helpful to pay for extra-overhead when resolving transitive dependencies of the kjars (out of scope of this investigation).
+
+![](./images/Screenshot%202023-06-21%20at%2008.54.24.png)
+
 ## 2023-06-07 no metaspace/permgen issue found
 
 As expected good `KieContainer` behaviour found, even when using exec model on Drools v8.

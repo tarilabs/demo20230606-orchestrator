@@ -19,14 +19,14 @@ public class AppMultiJar {
     public static Logger LOG = LoggerFactory.getLogger(AppMultiJar.class);
     static Scanner s = new Scanner(System.in);
     static String JSON;
-    static String kjarName = "demo20230606-kjar";
     static KieContainer kieContainer = null;
     static ReleaseId releaseId;
     static byte[] buffer;
-
+    
     public static void main(String[] args) throws Exception {
         LOG.info("App starting.");
         String jsonFilename = "test1.json";
+        String kjarName = "demo20230606-2000-rules-kjar-";
 
         // accept the JSON file name as an argument
         if(args.length == 1) {
@@ -57,6 +57,9 @@ public class AppMultiJar {
             // release the KieContainer
             kieContainer.dispose();
         } while(i++ < 100);
+
+        System.gc();
+        pressEnterKeyToContinue("Nothing more to do, app will exit");
     }
 
     private static void doOnce(KieServices ks) throws Exception {

@@ -41,3 +41,6 @@ nb-configuration.xml
 
 # Plugin directory
 /.quarkus/cli/plugins/
+
+# use demo20230606-2000-rules-kjar/gen-jar.sh to recreate the artifacts locally
+demo20230606-2000-rules-kjar/jar-dir
