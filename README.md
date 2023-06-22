@@ -9,6 +9,12 @@ It is to be noted by this commit this demonstrator does not include: https://git
 
 ![](./images/Screenshot%202023-06-21%20at%2008.54.24.png)
 
+However when KJARs manually loaded into the KieRepository, there seems to appear some strange behaviour:
+
+![](./images/Screenshot%202023-06-21%20at%2009.49.13.png)
+
+Focusing on this last scenario and investigating...
+
 ## 2023-06-07 no metaspace/permgen issue found
 
 As expected good `KieContainer` behaviour found, even when using exec model on Drools v8.
