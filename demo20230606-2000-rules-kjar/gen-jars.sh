@@ -3,7 +3,7 @@ i=0
 ### make sure the target jar directory exists
 mkdir -p jar-dir
 
-until [ $i -gt 100 ]
+until [ $i -gt 10 ]
 do
 	### copy the template and set the artifact id
 	cat pom-template.xml | sed -e "s/\#\#\#/$i/" > pom.xml

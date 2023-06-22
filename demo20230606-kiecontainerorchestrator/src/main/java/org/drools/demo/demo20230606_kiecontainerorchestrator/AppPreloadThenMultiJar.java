@@ -28,7 +28,7 @@ public class AppPreloadThenMultiJar {
 
         KieServices ks = KieServices.get();
         String kjarBaseName = "demo20230606-2000-rules-kjar-";
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i <= 10; i++) {
             LOG.debug("Loop count: {}", i);
             Path path = Path.of("../demo20230606-2000-rules-kjar/jar-dir/", kjarBaseName + i + "-1.0-SNAPSHOT.jar");
             LOG.info("Loop path: {}", path);

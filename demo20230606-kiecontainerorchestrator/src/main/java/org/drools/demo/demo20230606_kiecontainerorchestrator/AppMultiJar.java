@@ -56,7 +56,8 @@ public class AppMultiJar {
 
             // release the KieContainer
             kieContainer.dispose();
-        } while(i++ < 100);
+            kieContainer = null; // relinquish all instances for real in Java, to give a chance to the GC.
+        } while(i++ < 10);
 
         System.gc();
         pressEnterKeyToContinue("Nothing more to do, app will exit");
