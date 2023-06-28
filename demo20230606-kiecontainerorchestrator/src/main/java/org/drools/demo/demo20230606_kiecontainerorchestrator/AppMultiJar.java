@@ -18,11 +18,11 @@ import java.util.Scanner;
 public class AppMultiJar {
     public static Logger LOG = LoggerFactory.getLogger(AppMultiJar.class);
     static Scanner s = new Scanner(System.in);
+    static String kjarName = "demo20230606-2000-rules-kjar-";
     
     public static void main(String[] args) throws Exception {
         LOG.info("App starting.");
         String jsonFilename = "test1.json";
-        String kjarName = "demo20230606-2000-rules-kjar-";
 
         // accept the JSON file name as an argument
         if(args.length == 1) {
@@ -41,24 +41,20 @@ public class AppMultiJar {
         final var JSON = Files.readString(Paths.get(AppMultiJar.class.getResource("/" + jsonFilename).toURI()));
 
         // prep Drools
-        KieServices ks = KieServices.get();
         int i = 0;
         do {
-            LOG.info("Loop count: " + i);
-            ReleaseId releaseId = ks.newReleaseId("org.drools.demo", kjarName + i, "1.0-SNAPSHOT");
-            KieContainer kieContainer = ks.newKieContainer(releaseId);
-            doOnce(kieContainer, JSON);
-            
-            // release the KieContainer
-            kieContainer.dispose();
-            System.gc();
-        } while(i++ < 10);
+            doOnce(i, JSON);
+        } while(i++ < 1);
 
         System.gc();
         pressEnterKeyToContinue("Nothing more to do, app will exit");
     }
 
-    private static void doOnce(KieContainer kieContainer, final String JSON) throws Exception {
+    private static void doOnce(int i, final String JSON) throws Exception {
+        LOG.info("Loop count: " + i);
+        KieServices ks = KieServices.get();
+        ReleaseId releaseId = ks.newReleaseId("org.drools.demo", kjarName + i, "1.0-SNAPSHOT");
+        KieContainer kieContainer = ks.newKieContainer(releaseId);
         // create a new KieSession
         KieSession session = kieContainer.newKieSession();
 
@@ -73,6 +69,10 @@ public class AppMultiJar {
 
         // release the KieSession
         session.dispose();
+
+        // release the KieContainer
+        kieContainer.dispose();
+        System.gc();
     }
 
     private static void pressEnterKeyToContinue(String message) {
