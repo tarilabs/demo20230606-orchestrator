@@ -14,11 +14,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Function;
 
 public class AppMultiJar {
     public static Logger LOG = LoggerFactory.getLogger(AppMultiJar.class);
     static Scanner s = new Scanner(System.in);
     static String kjarName = "demo20230606-2000-rules-kjar-";
+    
+    static Function<ReleaseId, KieContainer> strategy = (releaseId) -> KieServices.get().newKieContainer(releaseId);
     
     public static void main(String[] args) throws Exception {
         LOG.info("App starting.");
@@ -54,7 +57,7 @@ public class AppMultiJar {
         LOG.info("Loop count: " + i);
         KieServices ks = KieServices.get();
         ReleaseId releaseId = ks.newReleaseId("org.drools.demo", kjarName + i, "1.0-SNAPSHOT");
-        KieContainer kieContainer = ks.newKieContainer(releaseId);
+        KieContainer kieContainer = strategy.apply(releaseId);
         // create a new KieSession
         KieSession session = kieContainer.newKieSession();
 

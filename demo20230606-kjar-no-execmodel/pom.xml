@@ -10,8 +10,9 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>demo20230606-kiecontainerorchestrator</artifactId>
-  <name>demo20230606-kiecontainerorchestrator</name>
+  <artifactId>demo20230606-kjar-no-execmodel</artifactId>
+  <name>demo20230606-kjar-no-execmodel</name>
+  <packaging>kjar</packaging>
 
   <dependencyManagement>
     <dependencies>
@@ -38,21 +39,34 @@
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-engine</artifactId>
+      <artifactId>drools-engine-classic</artifactId>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-xml-support</artifactId>
     </dependency>
-    <!--<dependency>
+    <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-ci</artifactId>
-    </dependency>-->
+    </dependency>
 
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${version.org.junit}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>${version.org.assertj}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>${version.ch.qos.logback}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -60,22 +74,15 @@
       <version>${version.com.fasterxml.jackson}</version>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>java</goal>
-            </goals>
-          </execution>
-        </executions>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-maven-plugin</artifactId>
+        <version>${version.org.drools}</version>
+        <extensions>true</extensions>
         <configuration>
-          <mainClass>org.drools.demo.demo20230606_kiecontainerorchestrator.AppPreloadThenMultiJar</mainClass>
+          <generateModel>NO</generateModel>
         </configuration>
       </plugin>
     </plugins>

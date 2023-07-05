@@ -17,7 +17,7 @@
     <version.org.assertj>3.24.2</version.org.assertj>
     <version.org.junit>5.9.3</version.org.junit>
     <version.com.fasterxml.jackson>2.15.2</version.com.fasterxml.jackson>
-    <version.org.drools>8.41.0-SNAPSHOT</version.org.drools>
+    <version.org.drools>8.42.0-SNAPSHOT</version.org.drools>
     <version.ch.qos.logback>1.2.9</version.ch.qos.logback>
   </properties>
 
@@ -25,6 +25,7 @@
     <module>demo20230606-datamodel</module>
     <module>demo20230606-utils</module>
     <module>demo20230606-kjar</module>
+    <module>demo20230606-kjar-no-execmodel</module>
     <module>demo20230606-2000-rules-kjar</module>
     <module>demo20230606-kiecontainerorchestrator</module>
   </modules>

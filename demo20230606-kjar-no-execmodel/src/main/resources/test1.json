@@ -1,0 +1,36 @@
+[
+    {
+        "objectType": "Cart",
+        "fields": {
+            "AccountId": "myAccountId"
+        }
+    },
+    {
+        "objectType": "Account",
+        "id": "myAccountId",
+        "fields": {
+            "Type": "Preferred"
+        }
+    },
+    {
+        "objectType": "CartItem",
+        "id": "kiwiCartItemId",
+        "fields": {
+            "ProductId": "myProductId"
+        }
+    },
+    {
+        "objectType": "Product2",
+        "id": "myProductId",
+        "fields": {
+            "Name": "Kiwi"
+        }
+    },
+    {
+        "objectType": "CartItem",
+        "id": "NON-kiwiCartItemId",
+        "fields": {
+            "Quantity": 123
+        }
+    }
+]
