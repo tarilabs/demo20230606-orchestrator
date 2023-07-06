@@ -28,6 +28,7 @@
     <module>demo20230606-kjar-no-execmodel</module>
     <module>demo20230606-2000-rules-kjar</module>
     <module>demo20230606-kiecontainerorchestrator</module>
+    <module>demo20230606-asquarkus</module>
   </modules>
 
   <build>
