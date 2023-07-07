@@ -28,7 +28,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @State(Scope.Benchmark)
 public class EvaluatingRulesBenchmark {
-    static final String kjarName = "demo20230606-2000-rules-kjar-";
     private KieSession session;
     private List<Fact> unmarshal;
 
@@ -38,8 +37,6 @@ public class EvaluatingRulesBenchmark {
                 .readerFor(new TypeReference<List<Fact>>() {})
                 .readValue(EvaluatingRulesBenchmark.class.getResourceAsStream("/100-line-items.json"));
         KieServices ks = KieServices.get();
-        // ReleaseId releaseId = ks.newReleaseId("org.drools.demo", kjarName + "1", "1.0-SNAPSHOT");
-        // KieContainer kieContainer = ks.newKieContainer(releaseId);
         KieContainer kieContainer = ks.newKieClasspathContainer();
         session = kieContainer.newKieSession();
     }
@@ -51,7 +48,7 @@ public class EvaluatingRulesBenchmark {
         return session.fireAllRules();
     }
 
-    @TearDown
+    @TearDown(Level.Invocation)
     public void tearDown() {
         session.dispose();
     }

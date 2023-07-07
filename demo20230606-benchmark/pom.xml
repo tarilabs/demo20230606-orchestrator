@@ -28,20 +28,11 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
-        <!-- <dependency>
-            <groupId>org.kie</groupId>
-            <artifactId>kie-ci</artifactId>
-        </dependency> -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>demo20230606-datamodel</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!-- <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>demo20230606-2000-rules-kjar-1</artifactId>
-            <version>${project.version}</version>
-        </dependency> -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>demo20230606-utils</artifactId>
