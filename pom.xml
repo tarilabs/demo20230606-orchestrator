@@ -29,6 +29,7 @@
     <module>demo20230606-2000-rules-kjar</module>
     <module>demo20230606-kiecontainerorchestrator</module>
     <module>demo20230606-asquarkus</module>
+    <module>demo20230606-benchmark</module>
   </modules>
 
   <build>
